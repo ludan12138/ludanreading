@@ -1,0 +1,79 @@
+*{
+    padding: 0;
+    margin:0;
+}
+body{
+    background: linear-gradient(200deg,#aecdd0,#d8c594);
+}
+
+.block{
+    margin: 0 auto;width: 720px;background-color: #FAF7ED;
+}
+.view_block_1{
+    height:520px;
+}
+.item_top{  padding: 10px 0;  border-bottom: 1px solid #eeeeee;  }
+.top_categoryname{font-size: 16px;font-family: 'Microsoft YaHei', arial, sans-serif;color: #262b86}
+
+
+#next_page,#previous_page{
+    float:right;padding:5px;border: 1px solid #d4d4d4;background-color: #FAF7ED;
+    cursor: pointer;font-weight: bold;
+}
+#next_page:hover,#previous_page:hover{
+    border-color: #3072b3;
+    background-color: #3c8dde;
+    color: #ffffff;
+}
+.no_page{
+    color: #d4d4d4;
+}
+
+#TextContent{
+    text-indent: 2em;
+}
+
+h3{
+    text-align: center;  color: #ffffff;line-height: 56px;height: 56px;overflow: hidden;
+    border-bottom: 2px solid #1a1a1a;
+}
+
+.selected{
+    border-bottom: none;  box-shadow: 0px 0px 8px #000000 inset;
+}
+#left{
+    z-index:88;
+    overflow: hidden;
+}
+
+/* å³è¾¹ */
+#right li{
+    margin-bottom: 3px;
+    box-shadow: 0 0 2px #888888;
+}
+#right li a{
+    height: 50px;width: 50px;display: block;
+    background-color: #FAF7ED;
+}
+#right li:nth-child(1) a{
+    color: #333333;
+    text-decoration: none;
+    line-height: 25px;
+    height: 25px;
+    text-align: center;
+}
+#right li:nth-child(2) a{
+    background-image: url('../img/reading/mulu.png');
+}
+
+/*#right li:nth-child(3) a{
+    background-image: url('../img/reading/page.png');
+    background-repeat: no-repeat;
+    background-position: center;
+
+}*/
+
+#right li:nth-child(3) a{
+    background-image: url('../img/reading/gotop.png');
+    margin-top: 200px;
+}

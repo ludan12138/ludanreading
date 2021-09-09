@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD MApper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.ludanreading.mapper.AuthorMapper">
+    <resultMap id="AuthorEntityMap" type="com.example.ludanreading.entity.Author">
+        <id column="aid" property="aid"/>
+        <result column="is_delete" property="isDelete"/>
+        <result column="created_user" property="createdUser"/>
+        <result column="created_time" property="createdTime"/>
+        <result column="modified_user" property="modifiedUser"/>
+        <result column="modified_time" property="modifiedTime"/>
+    </resultMap>
+    <select id="findByAuthorname" resultMap="AuthorEntityMap">
+        select *
+        from t_author
+        where authorname = #{authorname}
+    </select>
+    <select id="getAvatarByAuthorname" resultType="java.lang.String">
+        select avatar
+        from t_author
+        where authorname = #{authorname}
+    </select>
+    <select id="getIntroductionByAuthorname" resultType="java.lang.String">
+        select introduction
+        from t_author
+        where authorname = #{authorname}
+    </select>
+    <select id="getAuthor" resultMap="AuthorEntityMap">
+        select *
+        from t_author;
+    </select>
+    <select id="getAuthorname" resultType="java.lang.String">
+        select authorname
+        from t_author
+        limit 0,8
+    </select>
+</mapper>

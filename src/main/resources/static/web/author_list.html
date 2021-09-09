@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="../css/author_list.css">
+        <script type="text/javascript" src="../bootstrap3/jquery-1.8.3.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <div id="header_content">
+                <span>书籍是人类进步的阶梯</span>
+            </div>
+        </header>
+        <div id="zhuti">
+            <div id="nav">
+                <div id="navs">
+                    <ul>
+                        <li><a href="../index.html">首页</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">现当代文学</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">散文随笔</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">外国文学</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">短篇小说</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">古代文学</a></li>
+                        <li>||</li>
+                        <li><a class=“author_type” href="author_list">作者专区</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div >
+                <ul id="author_list">
+                    <li class="author_block">
+                        <div class="author_content">
+                            <p>
+                                <a class="author" href="">作者1</a>
+                            </p>
+                            <div class="intro">
+                                著名作家
+                            </div>
+                        </div>
+                    </li>
+                    <li class="author_block">
+                        <div class="author_content">
+                            <p>
+                                <a class="author" href="">作者1</a>
+                            </p>
+                            <div class="intro">
+                                著名作家
+                            </div>
+                        </div>
+                    </li>
+                    <li class="author_block">
+                        <div class="author_content">
+                            <p>
+                                <a class="author" href="">作者1</a>
+                            </p>
+                            <div class="intro">
+                                著名作家
+                            </div>
+                        </div>
+                    </li>
+                    <li class="author_block">
+                        <div class="author_content">
+                            <p>
+                                <a class="author" href="">作者1</a>
+                            </p>
+                            <div class="intro">
+                                著名作家
+                            </div>
+                        </div>
+                    </li>
+                    <li class="author_block">
+                        <div class="author_content">
+                            <p>
+                                <a class="author" href="">三毛</a>
+                            </p>
+                            <div class="intro" style="height:120px; overflow: auto">
+                                三毛，女，本名陈懋平，后改名为陈平，英文名叫ECHO。1943年3月26日生于四川重庆，浙江省定海县人，1991年1月4日去世，台湾著名作家。“中国文化大学”哲学系肄业。曾留学欧洲，婚后定居西属撒哈拉沙漠迦纳利岛，并以当地的生活为背景，写出一连串脍炙人口的作品。
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        $(function(){
+           $(".type").each(function(){
+             $(this).attr("href","type.html?type="+$(this).html());
+           });
+           $.ajax({
+               url:"/author/all",
+               type:"get",
+               dataType:"json",
+               success:function(json){
+                   if(json.state == 200){
+                       $("#author_list").empty();
+                       for (let i = 0; i < json.data.length; i++) {
+                           let html = "<li class=\"author_block\"><div class=\"author_content\"><p><a class=\"author\" href=\"\">"
+                                    + "#{name}"
+                                    + "</a></p><div class=\"intro\" style=\"height:120px; overflow: auto\">"
+                                    + "#{introduction}"
+                                    +"</div></div></li>";
+                           html = html.replace(/#{name}/g,json.data[i].name);
+                           html = html.replace(/#{introduction}/g,json.data[i].introduction);
+                           console.log(html);
+                           $("#author_list").append(html);
+                       }
+                       $(".author").each(function(){
+                          $(this).attr("href","author.html?authorname="+$(this).html());
+                       });
+                   }
+               }
+           });
+        });
+    </script>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>作者介绍</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../css/author.css">
+        <script src="../bootstrap3/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="../bootstrap3/js/jquery.cookie.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <!--右侧导航-->
+        <div id="shouye">
+            <p>
+                <a href="/index.html">首页</a>
+            </p>
+        </div>
+        <!--中间作者介绍-->
+        <div>
+            <span><img id="author_avatar" src="" title="作者图片" ></span>
+            <span id="introduce">
+                        <p id="author_name">鲁迅</p>
+                        <div id="author_introduce">伟大的作家，弃医从文</div>
+                    </span>
+
+            <div id="author_book">
+                <p style="font-size: 20px;">作品</p>
+                <ul id="book_list">
+                    <li><a class="bookname" href=""></a></li>
+                    <li><a class="bookname" href=""></a></li>
+                    <li><a class="bookname" href=""></a></li>
+                    <li><a class="bookname" href=""></a></li>
+                </ul>
+
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../bootstrap3/js/getUrlParam.js"></script>
+    <script type="text/javascript">
+        $(function() {
+           //let authorname = $.cookie("authorname");
+           let authorname = UrlParam.paramValues("authorname");
+           $("#author_name").html(authorname);
+           $.ajax({
+               url:"/author/avatar",
+               type:"get",
+               data:"authorname="+authorname,
+               dataType:"json",
+               success:function(json){
+                   if(json.state == 200){
+                       let src = "../img/author/"+json.data;
+                       $("#author_avatar").attr("src",src);
+                   }else {
+                       alert("获取作者头像失败");
+                   }
+               },
+               error:function(json){
+                   alert("获取作者头像失败");
+               }
+           });
+           $.ajax({
+              url:"/author/introduction",
+              type:"get",
+              data:"authorname="+authorname,
+              dataType:"json",
+              success:function(json) {
+                  if(json.state == 200){
+                      $("#author_introduce").html(json.data);
+                  }else{
+                      alert("获取作者介绍失败");
+                  }
+              },
+              error:function(json){
+                  alert("获取作者介绍失败");
+              }
+           });
+           $.ajax({
+               url:"/book/authorname",
+               type:"get",
+               data:"authorname="+authorname,
+               dataType:"json",
+               success:function(json) {
+                   if(json.state == 200){
+                       //$("#book_list").empty();
+                       for (let i = 0; i < 4; i++) {
+                           //let li = '<li><a target="_blank" class="bookname" href="reading.html">' + json.data[i].bookname +'</a></li>';
+                           //$("#book_list").append(li);
+                           $("#book_list a").eq(i).html(json.data[i].bookname);
+                       }
+                       $(".bookname").each(function() {
+                           let path = "reading.html?bookname="+$(this).html();
+                           console.log(path);
+                           $(this).attr("href",path);
+                       });
+                   }else {
+                       alert("获取作者作品失败");
+                   }
+               },
+               error:function(){
+                   alert("获取作者作品失败");
+               }
+           });
+        });
+    </script>
+</html>

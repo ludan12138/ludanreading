@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:background-image="http://www.w3.org/1999/xhtml">
+    <head>
+        <title id="title"></title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="../css/reading.css">
+        <script src="../bootstrap3/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="../bootstrap3/js/jquery.cookie.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <!--右边-->
+        <div id="right" style="position: fixed;left: 50%;top: 200px;">
+            <div style="margin-left: 363px;width: 50px;">
+                <ul style="list-style: none">
+                    <li><a href="/index.html">首页</a></li>
+                    <!--<li><a href="javascript:" title="目录" onclick="viewLeft()" ></a></li>-->
+                    <!--<li id="page_reader"><a href="javascript:" title="分页阅读" onclick="pageReader()"></a></li>-->
+                    <!--<li id="gotop"><a href="javascript:" title="回顶部" onclick="goTop()"></a></li>-->
+                </ul>
+            </div>
+        </div>
+        <!--中间-->
+        <div class="block" style="margin-top: 0px;">
+            <div style="border: 1px solid #dcdcdc;border-top: none;padding: 0px 20px">
+                <div class="item_top">
+                    <p id="top_bookname">
+                        <span class="top_categoryname"></span>
+                    </p>
+                </div>
+                <div class="view_block_1" id="view_block" style="border: 0px solid #dcdcdc;margin: 10px 0;overflow: auto">
+                </div>
+                <div id="page" style="float:right" >123</div>
+            </div>
+            <!-- 上一页下一页按钮模块开始 -->
+            <div id="change_page_block" style="margin-top: 10px">
+                <div id="huanye" style="float: right;margin-right: 20px">
+                    <div class="next_page" id="next_page" style="border-top-right-radius: 6px;border-bottom-right-radius: 6px">下一页</div>
+                    <div class="previous_page" id="previous_page" style="border-top-left-radius: 6px;border-bottom-left-radius: 6px">上一页</div>
+                </div>
+            </div>
+            <!-- 上一页下一页按钮模块结束 -->
+        </div>
+    </body>
+    <script type="text/javascript" src="../bootstrap3/js/getUrlParam.js"></script>
+    <script type="text/javascript">
+        var bookContent = "";
+        var index = 0;
+        var page = 1;
+        var page_sum = 0;
+        var page_content = document.getElementById("page");
+        //var bookname = $.cookie("bookname");
+        var bookname = UrlParam.paramValues("bookname");
+        document.getElementById("title").innerText = bookname;
+        $(function(){
+           $("#top_bookname").empty();
+           $("#content").empty();
+           $.ajax({
+              url:"/book/content",
+              type:"get",
+              data:"bookname="+bookname,
+              datatype:"json",
+              success:function(json){
+                  if(json.state == 200){
+                      bookContent = json.data;
+                      page_sum = Math.ceil(bookContent.length / 1000) ;
+                      let span = "<span>" + bookname + "</span>";
+                      let section = "<section>" + bookContent.substring(index,index+1000) + "</section>";
+                      $("#top_bookname").append(span);
+                      $("#view_block").append(section);
+                      page_content.innerText = page + '/' +page_sum;
+                  }else{
+                      alert("获取图书内容失败");
+                  }
+              }
+           });
+        });
+        $("#next_page").click(function(){
+            $("#view_block").empty();
+            index = (index + 1000) > bookContent.length ? bookContent.length : (index + 1000);
+            let section = "<section>" + bookContent.substring(index,index+1000) + "</section>";
+            $("#view_block").append(section);
+            page = page + 1;
+            page_content.innerText = page + '/' +page_sum;
+        });
+        $("#previous_page").click(function(){
+            $("#view_block").empty();
+            index = (index - 1000) < 0 ? 0 : (index - 1000);
+            let section = "<section>" + bookContent.substring(index,index+1000) + "</section>";
+            $("#view_block").append(section);
+            page = (page - 1) < 1 ? 1 : (page - 1);
+            page_content.innerText = page + '/' +page_sum;
+        });
+    </script>
+</html>

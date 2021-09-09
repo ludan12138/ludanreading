@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        <link rel="stylesheet" href="../css/type.css">
+        <script type="text/javascript" src="../bootstrap3/jquery-1.9.1.min.js"></script>
+    </head>
+    <body>
+        <header>
+            <div id="header_content">
+                <span>书籍是人类进步的阶梯</span>
+            </div>
+        </header>
+        <div id="zhuti">
+
+            <div id="nav">
+                <div id="navs">
+                    <ul>
+                        <li><a href="../index.html">首页</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">现当代文学</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">散文随笔</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">外国文学</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">短篇小说</a></li>
+                        <li>|</li>
+                        <li><a class="type" href="">古代文学</a></li>
+                        <li>||</li>
+                        <li><a class="" href="author_list.html">作者专区</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="search">
+                <div id="search_reight" style="float:right;height:32px">
+                    <select name="option" id="option">
+                        <option value="1">书名</option>
+                        <option value="2">作者</option>
+                        <option value="3" selected="selected">任意</option>
+                    </select>
+                    <input type="text" name="k" id="k" style="padding-left:5px;" onkeydown="">
+                    <input type="button" name="submit" id="submit" value="搜索" onclick="">
+                </div>
+            </div>
+            <div id="book_list">
+                <div class="circle_box">
+                    <div class="round">
+                     <div class="circle">
+                      <a class="book_item" href=""></a>
+                     </div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle">
+                      <a class="book_item" href=""></a>
+                     </div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle">
+                      <a class="book_item" href=""></a>
+                     </div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle">
+                      <a class="book_item" href=""></a>
+                     </div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle">
+                      <a class="book_item" href=""></a>
+                     </div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle">
+                      <a class="book_item" href=""></a>
+                     </div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle">
+                      <a class="book_item" href=""></a>
+                     </div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle">
+                      <a class="book_item" href=""></a>
+                     </div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle"></div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle"></div>
+                     <div class="circle_bottom animation "></div>
+                     <div class="circle_bottom2 animation2 "></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle"></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle"></div>
+                    </div>
+                    <div class="round">
+                     <div class="circle"></div>
+                    </div>
+                   </div>
+            </div>
+            <div style="width:980px;clear:both;height:88px;margin-top:20px;margin-left:0px;font-size:14px;">
+                <div style="line-height:88px;padding-left:12px;background:rgba(255,255,255,0.5)">
+                    <p>希望阅读令你快乐</p>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" src="../bootstrap3/js/getUrlParam.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $(".type").each(function(){
+                $(this).attr("href","type.html?type="+$(this).html());
+            });
+            let type = UrlParam.paramValues("type");
+            $.ajax({
+               url:"/book/type",
+               type:"get",
+               data:"type=" + type,
+               dataType:"json",
+               success:function(json) {
+                    if(json.state == 200){
+                        for (let i = 0; i < json.data.length; i++) {
+                            $(".book_item").eq(i).html(json.data[i].bookname);
+                        }
+                    }
+               }
+            });
+        });
+
+    </script>
+</html>

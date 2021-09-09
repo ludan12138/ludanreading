@@ -1,0 +1,15 @@
+body{
+    margin:0 auto;
+    width: 680px;
+    height: 680px;
+    background: linear-gradient(200deg,#aecdd0,#d8c594);
+}
+
+#tips {
+    margin-bottom: 10px;;
+}
+
+#upload_book input{
+    margin-top:5px;
+    margin-bottom: 5px;
+}
